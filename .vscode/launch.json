@@ -21,7 +21,7 @@
                 "/src": "${workspaceFolder}"
             },
             "justMyCode": true,
-            // "requireExactSource": false
+            "requireExactSource": false
         },
         {
             "name": "LOCAL",
