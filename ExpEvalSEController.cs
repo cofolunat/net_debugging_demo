@@ -16,7 +16,7 @@ public sealed class ExpEvalSEController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<DeadLockSEResponse> Get()
+    public ActionResult<ExpEvalSEResponse> Get()
     {
         var iBeforeExpEval = Volatile.Read(ref i);
 
