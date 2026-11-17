@@ -2,11 +2,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY FibonacciService.csproj ./
-RUN dotnet restore FibonacciService.csproj
+COPY DebuggingDemo.csproj ./
+RUN dotnet restore DebuggingDemo.csproj
 
 COPY . ./
-RUN dotnet publish FibonacciService.csproj \
+RUN dotnet publish DebuggingDemo.csproj \
     --configuration "$BUILD_CONFIGURATION" \
     --output /app/publish \
     --no-restore \
@@ -27,4 +27,4 @@ COPY --from=build /app/publish ./
 ENV ASPNETCORE_HTTP_PORTS=8080
 EXPOSE 8080
 
-ENTRYPOINT ["dotnet", "FibonacciService.dll"]
+ENTRYPOINT ["dotnet", "DebuggingDemo.dll"]

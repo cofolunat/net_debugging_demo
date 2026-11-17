@@ -1,12 +1,13 @@
 services:
-  fibonacci-service:
+  debugging_demo:
+    container_name: debugging_demo
     build:
       context: .
       dockerfile: Dockerfile
       args:
         BUILD_CONFIGURATION: Debug
     ports:
-      - "${FIBONACCI_PORT:-8081}:8080"
+      - "${DEBUGGING_DEMO_PORT:-8081}:8080"
     cap_add:
       - SYS_PTRACE
     security_opt:
