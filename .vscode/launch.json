@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "REMOTE",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickRemoteProcess}",
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": [
+                    "compose",
+                    "exec",
+                    "-T",
+                    "fibonacci-service"
+                ],
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceFolder}",
+                "quoteArgs": false
+            },
+            "sourceFileMap": {
+                "/src": "${workspaceFolder}"
+            },
+            "justMyCode": true,
+            // The PDB checksum is verified during the image build workflow;
+            // allow the debugger to bind the host file mapped from Docker's /src.
+            "requireExactSource": false
+        },
+        {
+            "name": "LOCAL",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build Fibonacci Service",
+            "program": "${workspaceFolder}/bin/Debug/net8.0/FibonacciService.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "uriFormat": "%s/test?i=10"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://localhost:8081"
+            },
+            "console": "internalConsole"
+        }
+    ]
+}

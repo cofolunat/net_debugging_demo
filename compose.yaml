@@ -1,0 +1,16 @@
+services:
+  fibonacci-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug
+    ports:
+      - "${FIBONACCI_PORT:-8081}:8080"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    restart: unless-stopped
