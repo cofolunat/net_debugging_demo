@@ -10,7 +10,9 @@ RUN dotnet publish DebuggingDemo.csproj \
     --configuration "$BUILD_CONFIGURATION" \
     --output /app/publish \
     --no-restore \
-    /p:UseAppHost=false
+    /p:UseAppHost=false \
+    /p:DebugType=portable \
+    /p:Optimize=false
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app

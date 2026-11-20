@@ -20,8 +20,14 @@
             "sourceFileMap": {
                 "/src": "${workspaceFolder}"
             },
-            "justMyCode": true,
-            "requireExactSource": false
+            "justMyCode": false,
+            // "requireExactSource": false
+            "logging": {
+                "diagnosticsLog": {
+                    "protocolMessages": true,
+                    "dispatcherMessages": "normal"
+                }
+            }
         },
         {
             "name": "LOCAL",
