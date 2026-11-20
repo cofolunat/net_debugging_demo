@@ -17,6 +17,55 @@
 | `GET /side-effect/deadlock` | Удержать блокировку для демонстрации зависания expression evaluation |
 | `GET /side-effect/deadlock/status` | Получить текущее значение счётчика блокировки |
 
+## Необходимые расширения VS Code
+
+Для сборки и отладки проекта в VS Code установите расширения Microsoft:
+
+- [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
+  (`ms-dotnettools.csharp`);
+- [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)
+  (`ms-dotnettools.csdevkit`).
+
+Их можно найти по названиям в разделе Extensions (`Ctrl+Shift+X`) или установить
+из командной строки:
+
+```bash
+code --install-extension ms-dotnettools.csharp
+code --install-extension ms-dotnettools.csdevkit
+```
+
+После установки перезапустите VS Code, если редактор предложит это сделать.
+
+Если при удалённой отладке breakpoint не устанавливается, используйте
+pre-release-версии расширений:
+
+- C# — `11.9.41`;
+- C# Dev Kit — `11.11.98`.
+
+Для работы указанной pre-release-версии C# Dev Kit также необходимо установить
+.NET 10 SDK.
+
+Для просмотра PDB-файлов .NET 8 можно установить глобальный инструмент `mdv`:
+
+```bash
+dotnet tool install mdv --global --version 2.0.0-beta1.26075.1 \
+  --add-source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json
+```
+
+Хеши исходных файлов, записанные в PDB, можно посмотреть в секции `Document`:
+
+```bash
+mdv bin/Debug/net8.0/DebuggingDemo.pdb /md+ | \
+  awk '/^Document \(/{print_block=1}/^MethodDebugInformation \(/{print_block=0} print_block'
+```
+
+SHA-256-хеш локального файла исходного кода для сравнения с хешем из PDB
+вычисляется командой:
+
+```bash
+sha256sum <source_file.cs>
+```
+
 ## Локальный запуск
 
 В VS Code выберите конфигурацию `LOCAL` и нажмите `F5`. Перед запуском задача
